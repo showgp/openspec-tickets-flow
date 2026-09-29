@@ -28,7 +28,7 @@ adds the custom layer.
 Run from the target project root:
 
 ```bash
-/path/to/openspec-tickets-flow/install.sh
+bash <(curl -fsSL https://raw.githubusercontent.com/showgp/openspec-tickets-flow/master/install.sh)
 ```
 
 Or manually, inside the target repo:
@@ -43,13 +43,13 @@ npx skills@latest add mattpocock/skills -s tdd -y
 npx skills@latest add mattpocock/skills -s to-tickets -y
 
 # 3. Install this package's skills
-npx skills@latest add /path/to/openspec-tickets-flow -s setup-openspec-tickets -y
-npx skills@latest add /path/to/openspec-tickets-flow -s tasks-to-tickets -y
-npx skills@latest add /path/to/openspec-tickets-flow -s implement-openspec-ticket -y
-npx skills@latest add /path/to/openspec-tickets-flow -s review-openspec-ticket -y
+npx skills@latest add showgp/openspec-tickets-flow -s setup-openspec-tickets -y
+npx skills@latest add showgp/openspec-tickets-flow -s tasks-to-tickets -y
+npx skills@latest add showgp/openspec-tickets-flow -s implement-openspec-ticket -y
+npx skills@latest add showgp/openspec-tickets-flow -s review-openspec-ticket -y
 ```
 
-After publication, clone `showgp/openspec-tickets-flow` and run its `install.sh` from the target repo. To install individual skills without cloning, replace the local path above with `showgp/openspec-tickets-flow`; the installer itself needs a local checkout.
+Both the one-liner above and the manual `npx skills@latest add` commands fetch this package from `showgp/openspec-tickets-flow`; no local checkout of it is required.
 
 ## Workflow (per change)
 

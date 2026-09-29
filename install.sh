@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # Install the OpenSpec + Matt-skills workflow into the current project.
 # Usage: run from the target project root:
-#   /path/to/openspec-tickets-flow/install.sh
+#   bash <(curl -fsSL https://raw.githubusercontent.com/showgp/openspec-tickets-flow/master/install.sh)
+# or run a local checkout's install.sh the same way.
 set -euo pipefail
-
-PACKAGE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 say()  { printf '\n== %s ==\n' "$1"; }
 fail() { printf 'ERROR: %s\n' "$1" >&2; exit 1; }
@@ -12,6 +11,7 @@ fail() { printf 'ERROR: %s\n' "$1" >&2; exit 1; }
 have() { command -v "$1" >/dev/null 2>&1; }
 
 SKILLS_CLI=(npx skills@latest)
+SKILLS_PKG="showgp/openspec-tickets-flow"
 
 # ---------------------------------------------------------------- checks
 say "Checking prerequisites"
@@ -45,7 +45,7 @@ done
 say "Installing openspec-tickets-flow skills"
 
 for skill in setup-openspec-tickets tasks-to-tickets implement-openspec-ticket review-openspec-ticket; do
-  "${SKILLS_CLI[@]}" add "${PACKAGE_DIR}" -s "${skill}" -y
+  "${SKILLS_CLI[@]}" add "${SKILLS_PKG}" -s "${skill}" -y
 done
 
 # ------------------------------------------------------------------ finish
