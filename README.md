@@ -1,27 +1,25 @@
 # openspec-tickets-flow
 
-Reusable add-on package for the **OpenSpec + Matt skills** spec-driven workflow,
-extracted from a completed end-to-end exercise. It adds three bridge skills that
-connect Matt Pocock's general methods to OpenSpec's change/ticket structure,
-plus a one-time per-repo setup skill.
-
-Upstream tools are installed as-is from their own sources; this package only
-adds the custom layer.
+Add-on skills for a spec-driven workflow combining OpenSpec and Matt Pocock's
+`grilling`, `tdd`, and `to-tickets`. OpenSpec owns the change artifacts and
+generated commands; this package adds four skills for repo setup, local ticket
+handoff, implementation, and independent review. It does not modify upstream
+skills.
 
 ## What it installs
 
 | Skill | Purpose |
 | --- | --- |
-| `setup-openspec-tickets` | One-time per-repo setup: check the OpenSpec CLI and upstream skills, then propose config rules and a repository agent-instruction section for approval |
-| `tasks-to-tickets` | Turn one approved OpenSpec change's tasks into reviewable local tickets under `<changeRoot>/tickets/`, one per review cycle |
-| `implement-openspec-ticket` | Implement one approved ticket with scoped TDD, real checks, CLI smoke, then stop for review |
-| `review-openspec-ticket` | Independent two-axis review (Standards + Spec) with a YAGNI traced-to-requirement gate |
+| `setup-openspec-tickets` | One-time per-repo setup: inspect CLI, upstream skills and existing policies; propose config rules and agent instructions, writing only approved changes |
+| `tasks-to-tickets` | Plan complete change coverage, then publish one local ticket per review cycle under `<changeRoot>/tickets/` |
+| `implement-openspec-ticket` | Implement one approved ticket with scoped TDD, real checks and a CLI smoke; obtain independent review, reconcile tasks, then stop |
+| `review-openspec-ticket` | Read-only two-axis review (Standards + Spec) with a YAGNI traced-to-requirement gate |
 
 ## Prerequisites
 
 - Install Node.js 20.19.0+ and the OpenSpec CLI (`npm i -g @fission-ai/openspec@latest` or `brew install openspec`).
-- Run `openspec init` in the target repo before using `install.sh`; OpenSpec owns the generated tool commands and skills.
-- The script installs Matt Pocock's `grilling`, `tdd`, and `to-tickets` skills from their upstream source, then the four skills in this package.
+- Initialize the target repo with `openspec init` before using `install.sh`; OpenSpec owns its generated tool commands and skills.
+- Run the installer from that repo's root with `npx` available. It installs Matt Pocock's `grilling`, `tdd`, and `to-tickets` skills from upstream (unless already present), then the four skills in this package.
 
 ## Install
 
@@ -38,13 +36,14 @@ openspec init
 bash <(curl -fsSL https://raw.githubusercontent.com/showgp/openspec-tickets-flow/master/install.sh)
 ```
 
-If the target project is already initialized and the CLI is installed, step 3 alone is enough.
+If the target project already has `openspec/config.yaml` and the CLI is installed, step 3 alone is enough. After installation, ask your agent to run `setup-openspec-tickets`; review its proposed config and agent-instruction changes before it writes anything.
 
 Or manually, inside the target repo:
 
 ```bash
-# 1. Make sure openspec CLI is available and the repo is initialized
-openspec --version && openspec init
+# 1. Check the CLI; initialize only if openspec/config.yaml does not exist
+openspec --version
+test -f openspec/config.yaml || openspec init
 
 # 2. Install upstream skills (pick the three the flow needs)
 npx skills@latest add mattpocock/skills -s grilling -y
@@ -58,16 +57,16 @@ npx skills@latest add showgp/openspec-tickets-flow -s implement-openspec-ticket 
 npx skills@latest add showgp/openspec-tickets-flow -s review-openspec-ticket -y
 ```
 
-Both the one-liner above and the manual `npx skills@latest add` commands fetch this package from `showgp/openspec-tickets-flow`; no local checkout of it is required.
+Both methods fetch this package from `showgp/openspec-tickets-flow`; no local checkout is required. Run the setup skill once after either method.
 
 ## Workflow (per change)
 
 ```text
 grilling → approved proposal → approved spec → approved design → approved tasks
-  → tasks-to-tickets (publish one ticket per review cycle)
-  → implement-openspec-ticket (scoped TDD → checks → CLI smoke → review)
-  → review-openspec-ticket (Standards + Spec axes, YAGNI gate)
-  → human scope decisions → task reconciliation → next ticket
+  → tasks-to-tickets (plan full coverage; publish one ticket)
+  → approve ticket → implement-openspec-ticket (scoped TDD → checks → CLI smoke → independent review)
+  → human scope decisions → task reconciliation → stop for review
+  → approve publishing the next ticket → repeat until all tasks and spec requirements are covered
   → sync durable specs → archive  (each separately approved)
 ```
 
@@ -79,7 +78,9 @@ Key rules carried over from the exercise:
 - `tasks.md` puts each checkbox, full description, and verification criterion
   on **one physical line**; `openspec instructions apply --json` exposes only
   that line as the task description.
-- Reporting progress is not permission to continue. Stop after each ticket.
+- Reporting progress is not permission to continue. Future tickets may remain
+  unpublished during implementation; do not check a task until all of its
+  contributions, including planned future slices, are done and verified.
 
 ## Scope boundaries
 

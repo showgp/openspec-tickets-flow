@@ -50,16 +50,15 @@ done
 
 # ------------------------------------------------------------------ finish
 say "Done"
-
-echo "Installed skills:"
-"${SKILLS_CLI[@]}" ls 2>/dev/null | grep -E 'setup-openspec-tickets|tasks-to-tickets|implement-openspec-ticket|review-openspec-ticket' || true
+echo "Installed four openspec-tickets-flow skills (see your agent's project skill directory)."
 
 cat <<'NEXT'
 
 Next steps:
   1. Run the `setup-openspec-tickets` skill once in this repo (via your agent):
        "Use setup-openspec-tickets to configure this repo for the OpenSpec ticket flow."
-     It verifies openspec init state, and writes the config-rules + AGENTS.md section.
+     It checks the repo, proposes config rules and agent instructions, and writes
+     only the sections you approve.
   2. Start a change: discuss with grilling first, then create one OpenSpec change,
      approve proposal → spec → design → tasks one at a time.
   3. Publish tickets with tasks-to-tickets, one per review cycle.

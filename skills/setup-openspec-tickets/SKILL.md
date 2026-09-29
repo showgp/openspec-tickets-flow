@@ -104,13 +104,11 @@ substitute.
 
 ### 3. Write and verify
 
-After the user approves both sections (and any missing-skill installation):
+After the user decides both sections (and whether to install any missing skills), apply only the approved changes:
 
-- Edit `openspec/config.yaml` (merge, never clobber).
-- Add or update the agent-instruction section in the agreed file.
-- Re-read both files and confirm the approved rules and section are present,
-  without duplicate headings or discarded existing content. Do not create a
-  sample change; this skill only writes configuration.
+- Edit `openspec/config.yaml` only if Section A was approved (merge, never clobber).
+- Add or update the agent-instruction section only if Section B was approved.
+- Re-read changed files and confirm the approved rules and section are present, without duplicate headings or discarded existing content. If neither section was approved, leave the repo unchanged. Do not create a sample change; this skill only writes configuration.
 
 ### 4. Done
 
