@@ -49,7 +49,7 @@ npx skills@latest add /path/to/openspec-tickets-flow -s implement-openspec-ticke
 npx skills@latest add /path/to/openspec-tickets-flow -s review-openspec-ticket -y
 ```
 
-After publication, clone `<owner>/openspec-tickets-flow` and run its `install.sh` from the target repo. To install individual skills without cloning, replace the local path above with `<owner>/openspec-tickets-flow`; the installer itself needs a local checkout.
+After publication, clone `showgp/openspec-tickets-flow` and run its `install.sh` from the target repo. To install individual skills without cloning, replace the local path above with `showgp/openspec-tickets-flow`; the installer itself needs a local checkout.
 
 ## Workflow (per change)
 
