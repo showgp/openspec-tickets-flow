@@ -25,11 +25,20 @@ adds the custom layer.
 
 ## Install
 
-Run from the target project root:
+From the target project root, in order:
 
 ```bash
+# 1. Install the OpenSpec CLI (assumes Node.js 20.19+, https://nodejs.org)
+npm i -g @fission-ai/openspec@latest     # or: brew install openspec
+
+# 2. Initialize OpenSpec in this repo (skip if openspec/config.yaml already exists)
+openspec init
+
+# 3. Install upstream skills and this package's skills
 bash <(curl -fsSL https://raw.githubusercontent.com/showgp/openspec-tickets-flow/master/install.sh)
 ```
+
+If the repo is already initialized and the CLI is installed, step 3 alone is enough.
 
 Or manually, inside the target repo:
 
